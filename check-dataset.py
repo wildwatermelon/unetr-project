@@ -151,6 +151,10 @@ for i in range(6):
     img = val_ds[case_num]["image"]
     label = val_ds[case_num]["label"]
 
+    if case_num == 0:
+        print(img)
+        print(label)
+
     img_shape = img.shape
     label_shape = label.shape
     print(f"image shape: {img_shape}, label shape: {label_shape}")
