@@ -112,7 +112,7 @@ val_transforms = Compose(
             # RandCropByPosNegLabeld(
             #     keys=["image", "label"],
             #     label_key="label",
-            #     spatial_size=(48,48,48),
+            #     spatial_size=(96,96,96),
             #     pos=1,
             #     neg=1,
             #     num_samples=4,
