@@ -109,16 +109,6 @@ val_transforms = Compose(
                 keys=["image"], a_min=-175, a_max=250, b_min=0.0, b_max=1.0, clip=True
             ),
             CropForegroundd(keys=["image", "label"], source_key="image"),
-            # RandCropByPosNegLabeld(
-            #     keys=["image", "label"],
-            #     label_key="label",
-            #     spatial_size=(96,96,96),
-            #     pos=1,
-            #     neg=1,
-            #     num_samples=4,
-            #     image_key="image",
-            #     image_threshold=0,
-            # ),
             ToTensord(keys=["image", "label"]),
         ]
     )
@@ -156,9 +146,11 @@ slice_map = {
 
 for i in range(6):
     case_num = i
+
     img_name = os.path.split(val_ds[case_num]["image_meta_dict"]["filename_or_obj"])[1]
     img = val_ds[case_num]["image"]
     label = val_ds[case_num]["label"]
+
     img_shape = img.shape
     label_shape = label.shape
     print(f"image shape: {img_shape}, label shape: {label_shape}")

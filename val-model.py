@@ -109,16 +109,6 @@ val_transforms = Compose(
                 keys=["image"], a_min=-175, a_max=250, b_min=0.0, b_max=1.0, clip=True
             ),
             CropForegroundd(keys=["image", "label"], source_key="image"),
-            # RandCropByPosNegLabeld(
-            #     keys=["image", "label"],
-            #     label_key="label",
-            #     spatial_size=(48,48,48),
-            #     pos=1,
-            #     neg=1,
-            #     num_samples=4,
-            #     image_key="image",
-            #     image_threshold=0,
-            # ),
             ToTensord(keys=["image", "label"]),
         ]
     )
@@ -173,17 +163,16 @@ slice_map = {
 }
 
 case_num = 4
-# model.load_state_dict(torch.load("best_metric_model.pth"))
-model.load_state_dict(torch.load("best_metric_model.pth", map_location=torch.device('cpu')),strict=False)
+model.load_state_dict(torch.load("best_metric_model.pth"))
+# model.load_state_dict(torch.load("best_metric_model.pth", map_location=torch.device('cpu')),strict=False)
 model.eval()
 with torch.no_grad():
     img_name = os.path.split(val_ds[case_num]["image_meta_dict"]["filename_or_obj"])[1]
     img = val_ds[case_num]["image"]
     label = val_ds[case_num]["label"]
-    # val_inputs = torch.unsqueeze(img, 1).cuda()
-    # val_labels = torch.unsqueeze(label, 1).cuda()
-    val_inputs = torch.unsqueeze(img, 1)
-    val_labels = torch.unsqueeze(label, 1)
+
+    val_inputs = torch.unsqueeze(img, 1).cuda()
+    val_labels = torch.unsqueeze(label, 1).cuda()
     val_outputs = sliding_window_inference(
         val_inputs, (48, 48, 48), 4, model, overlap=0.8
     )
@@ -199,5 +188,5 @@ with torch.no_grad():
     plt.imshow(
         torch.argmax(val_outputs, dim=1).detach().cpu()[0, :, :, slice_map[img_name]]
     )
-    # plt.savefig('temp-model-validation.png')
+    plt.savefig('temp-model-validation.png')
     plt.show()
