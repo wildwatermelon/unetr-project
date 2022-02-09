@@ -32,3 +32,10 @@ CMD ["/bin/bash"] replace with docker exec
 
 ### debugging
 `python3 -m torch.utils.collect_env`
+
+### copying
+docker cp container_id:/workspace/unetr-project/best_metric_model.pth best_metric_model.pth
+docker cp container_id:/workspace/unetr-project/epoch_loss_values.txt epoch_loss_values.txt
+docker cp container_id:/workspace/unetr-project/metric_values.txt metric_values.txt
+docker cp container_id:/workspace/unetr-project/temp-model-validation.png temp-model-validation.png
+
