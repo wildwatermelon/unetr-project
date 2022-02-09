@@ -109,16 +109,16 @@ val_transforms = Compose(
                 keys=["image"], a_min=-175, a_max=250, b_min=0.0, b_max=1.0, clip=True
             ),
             CropForegroundd(keys=["image", "label"], source_key="image"),
-            RandCropByPosNegLabeld(
-                keys=["image", "label"],
-                label_key="label",
-                spatial_size=(48,48,48),
-                pos=1,
-                neg=1,
-                num_samples=4,
-                image_key="image",
-                image_threshold=0,
-            ),
+            # RandCropByPosNegLabeld(
+            #     keys=["image", "label"],
+            #     label_key="label",
+            #     spatial_size=(48,48,48),
+            #     pos=1,
+            #     neg=1,
+            #     num_samples=4,
+            #     image_key="image",
+            #     image_threshold=0,
+            # ),
             ToTensord(keys=["image", "label"]),
         ]
     )
