@@ -29,3 +29,6 @@ CMD ["/bin/bash"] replace with docker exec
 
 ### empty annotations
 `https://blog.roboflow.com/missing-and-null-image-annotations/`
+
+### debugging
+`python3 -m torch.utils.collect_env`
