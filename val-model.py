@@ -171,12 +171,14 @@ with torch.no_grad():
     img = val_ds[case_num]["image"]
     label = val_ds[case_num]["label"]
 
-    val_inputs = torch.unsqueeze(img, 1).cuda()
-    val_labels = torch.unsqueeze(label, 1).cuda()
+    # val_inputs = torch.unsqueeze(img, 1).cuda()
+    # val_labels = torch.unsqueeze(label, 1).cuda()
+    val_inputs = torch.unsqueeze(img, 1)
+    val_labels = torch.unsqueeze(label, 1)
     val_outputs = sliding_window_inference(
         val_inputs, (48, 48, 48), 4, model, overlap=0.8
     )
-    for i in [-20, 5, 5, 5, 5, 5, 5, 5, 5]:
+    for i in [-20, 5, 5, 5, 5]:
         slice_map[img_name] = slice_map[img_name] + i
         plt.figure("check", (18, 6))
         plt.subplot(1, 3, 1)
