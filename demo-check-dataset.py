@@ -151,18 +151,16 @@ for i in range(6):
     img = val_ds[case_num]["image"]
     label = val_ds[case_num]["label"]
 
-    if case_num == 0:
-        print(img)
-        print(label)
-
-    img_shape = img.shape
-    label_shape = label.shape
-    print(f"image shape: {img_shape}, label shape: {label_shape}")
-    plt.figure("image", (18, 6))
-    plt.subplot(1, 2, 1)
-    plt.title("image")
-    plt.imshow(img[0, :, :, slice_map[img_name]].detach().cpu(), cmap="gray")
-    plt.subplot(1, 2, 2)
-    plt.title("label")
-    plt.imshow(label[0, :, :, slice_map[img_name]].detach().cpu())
-    plt.show()
+    for i in [-20, 5, 5, 5, 5, 5, 5, 5, 5]:
+        slice_map[img_name] = slice_map[img_name] + i
+        img_shape = img.shape
+        label_shape = label.shape
+        print(f"image shape: {img_shape}, label shape: {label_shape}")
+        plt.figure("image", (18, 6))
+        plt.subplot(1, 2, 1)
+        plt.title("image: "+ img_name + '-' + "slice: " +  str(slice_map[img_name]))
+        plt.imshow(img[0, :, :, slice_map[img_name]].detach().cpu(), cmap="gray")
+        plt.subplot(1, 2, 2)
+        plt.title("label: " + img_name + '-' + "slice: " +  str(slice_map[img_name]))
+        plt.imshow(label[0, :, :, slice_map[img_name]].detach().cpu())
+        plt.show()

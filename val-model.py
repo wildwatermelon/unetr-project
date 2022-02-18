@@ -163,8 +163,8 @@ slice_map = {
 }
 
 case_num = 4
-model.load_state_dict(torch.load("best_metric_model.pth"))
-# model.load_state_dict(torch.load("best_metric_model.pth", map_location=torch.device('cpu')),strict=False)
+# model.load_state_dict(torch.load("best_metric_model.pth"))
+model.load_state_dict(torch.load("best_metric_model.pth", map_location=torch.device('cpu')),strict=False)
 model.eval()
 with torch.no_grad():
     img_name = os.path.split(val_ds[case_num]["image_meta_dict"]["filename_or_obj"])[1]
@@ -176,17 +176,19 @@ with torch.no_grad():
     val_outputs = sliding_window_inference(
         val_inputs, (48, 48, 48), 4, model, overlap=0.8
     )
-    plt.figure("check", (18, 6))
-    plt.subplot(1, 3, 1)
-    plt.title("image")
-    plt.imshow(val_inputs.cpu().numpy()[0, 0, :, :, slice_map[img_name]], cmap="gray")
-    plt.subplot(1, 3, 2)
-    plt.title("label")
-    plt.imshow(val_labels.cpu().numpy()[0, 0, :, :, slice_map[img_name]])
-    plt.subplot(1, 3, 3)
-    plt.title("output")
-    plt.imshow(
-        torch.argmax(val_outputs, dim=1).detach().cpu()[0, :, :, slice_map[img_name]]
-    )
-    plt.savefig('temp-model-validation.png')
-    plt.show()
+    for i in [-20, 5, 5, 5, 5, 5, 5, 5, 5]:
+        slice_map[img_name] = slice_map[img_name] + i
+        plt.figure("check", (18, 6))
+        plt.subplot(1, 3, 1)
+        plt.title("image: "+ img_name + '-' + "slice: " +  str(slice_map[img_name]))
+        plt.imshow(val_inputs.cpu().numpy()[0, 0, :, :, slice_map[img_name]], cmap="gray")
+        plt.subplot(1, 3, 2)
+        plt.title("label: " + img_name + '-' + "slice: " +  str(slice_map[img_name]))
+        plt.imshow(val_labels.cpu().numpy()[0, 0, :, :, slice_map[img_name]])
+        plt.subplot(1, 3, 3)
+        plt.title("output: " + img_name + '-' + "slice: " +  str(slice_map[img_name]))
+        plt.imshow(
+            torch.argmax(val_outputs, dim=1).detach().cpu()[0, :, :, slice_map[img_name]]
+        )
+        plt.savefig('temp-model-validation-'+img_name+'-'+str(slice_map[img_name])+'.png')
+        plt.show()
