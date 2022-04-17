@@ -44,5 +44,5 @@ x = [eval_num * (i + 1) for i in range(len(metric_values))]
 y = metric_values
 plt.xlabel("Iteration")
 plt.plot(x, y)
-# plt.savefig('temp-model-monitoring.png')
+plt.savefig('temp-model-monitoring.png')
 plt.show()
